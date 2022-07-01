@@ -1,0 +1,17 @@
+@use "../helpers/variables" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap");
+
+// Global tags
+html {
+    font-family: "Work Sans", sans-serif;
+    font-size: 62.5%;
+    overflow: auto;
+    scroll-behavior: smooth;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    color: $color-accent;
+}

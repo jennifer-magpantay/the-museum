@@ -1,0 +1,6 @@
+@mixin font-setup($color, $size, $weight, $transform) {
+    color: #{$color};
+    font-size: #{$size};
+    font-weight: #{$weight};
+    text-transform: #{$transform};
+}
