@@ -1,3 +1,9 @@
+@mixin display-flex($items, $justify) {
+    display: flex;
+    align-items: #{$items};
+    justify-content: #{$justify};
+}
+
 @mixin font-setup($color, $size, $weight, $transform) {
     color: #{$color};
     font-size: #{$size};

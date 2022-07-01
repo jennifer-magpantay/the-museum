@@ -1,0 +1,24 @@
+@use "../helpers/mixins" as *;
+@use "../helpers/variables" as *;
+
+.navigation {
+    &--list {
+        @include display-flex(center, "");
+
+        &-item {
+            .navigation--link {
+                @include font-setup($color-text-body-lg, $text-regular, $semibold, uppercase);
+                text-decoration: none;
+                transition: all 0.3s ease-in-out;
+
+                &:not(:last-child) {
+                    margin-right: 05rem;
+                }
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
