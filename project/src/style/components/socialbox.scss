@@ -1,19 +1,57 @@
 @use "../helpers/mixins" as *;
 @use "../helpers/variables" as *;
+@use "../helpers/responsive" as *;
 
 .box--container {
     @include font-setup($color-text-body-lg, $text-regular, $semibold, uppercase);
+    display: block;
+    margin-left: auto;
     background-color: $color-accent;
     color: $color-text-body-lg;
-    
+
     .box--list {
         @include display-flex(center, "");
 
         &-item {
-            padding: 1.95rem 2.4rem;
+            display: flex;
+            padding-top: 1.95rem;
+            padding-bottom: 1.95rem;
 
-            &:first-child {
+            &.language {
+                padding-inline: 2.4rem;
                 border-right: 01px solid #c3051e;
+            }
+
+            &.icon {
+                display: none;
+
+                @include laptop-large {
+                    display: block;
+                    padding-inline: 1.6rem;
+                }
+            }
+
+            .list--link {
+                display: flex;
+            }
+
+            &:hover {
+                background-color: #c3051e;
+            }
+
+            .language--select {
+                background-color: transparent;
+                border: none;
+                color: $color-text-body-lg;
+
+                option {
+                    color: $color-text-body;
+                    font-size: $text-regular;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }

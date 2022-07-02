@@ -1,19 +1,30 @@
 @use "../helpers/mixins" as *;
 @use "../helpers/variables" as *;
+@use "../helpers/responsive" as *;
 
 .navigation {
+    display: none;
+
+    @include laptop {
+        @include display-flex(center, flex-end);
+        width: 100%;
+        margin-right: 4rem;
+    }
+
     &--list {
-        @include display-flex(center, "");
+        @include display-flex(center, space-between);
 
         &-item {
+            display: inline-block;
+
+            &:not(:last-child) {
+                margin-right: clamp(2rem, 3vw, 4rem);
+            }
+
             .navigation--link {
                 @include font-setup($color-text-body-lg, $text-regular, $semibold, uppercase);
                 text-decoration: none;
                 transition: all 0.3s ease-in-out;
-
-                &:not(:last-child) {
-                    margin-right: 05rem;
-                }
 
                 &:hover {
                     text-decoration: underline;

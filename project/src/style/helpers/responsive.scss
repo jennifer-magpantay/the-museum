@@ -1,0 +1,43 @@
+// Queries following mobile first
+
+$small-mobile: 375px;
+@mixin small-mobile {
+  @media (min-width: #{$small-mobile}) {
+    @content;
+  }
+}
+
+$large-mobile: 425px;
+@mixin large-mobile {
+  @media (min-width: #{$large-mobile}) {
+    @content;
+  }
+}
+
+$mobile: 600px;
+@mixin mobile {
+  @media (min-width: #{$mobile}) {
+    @content;
+  }
+}
+
+$tablet: 768px;
+@mixin tablet {
+  @media (min-width: #{$tablet}) {
+    @content;
+  }
+}
+
+$laptop: 1130px; //1024px
+@mixin laptop {
+  @media (min-width: #{$laptop}) {
+    @content;
+  }
+}
+
+$laptop-large: 1440px;
+@mixin laptop-large {
+  @media (min-width: #{$laptop-large}) {
+    @content;
+  }
+}
