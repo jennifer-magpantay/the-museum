@@ -1,0 +1,127 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixins" as *;
+@use "../helpers/responsive" as *;
+
+.footer {
+    &--container-content {
+        width: 100%;
+        height: auto;
+        background-color: $color-background-dk;
+
+        @include laptop {
+            @include display-flex(center, "");
+            height: 485px;
+        }
+    }
+
+    .content--info {
+        width: 100%;
+        height: 100%;
+        padding: 0 4.16%;
+
+        @include laptop {
+            width: 65%;
+            padding: 0 0 0 4.16%;
+        }
+
+        &-header {
+            width: 100%;
+            padding-top: 4.8125rem;
+
+            .content--header-title {
+                @include font-setup($color-text-body-lg, $text-2xlg, $bold, uppercase);
+                margin-top: 1.5rem;
+            }
+
+            .content--header-location {
+                @include display-flex(center, "");
+                @include font-setup($color-text-body-lg, $text-sm, $regular, none);
+            }
+        }
+
+        &-body {
+            width: 100%;
+            // height: 100%;
+
+            @include tablet {
+                @include display-flex(flex-start, "");
+            }
+
+            .content--partner {
+                flex: 1;
+                height: 100%;
+                margin-top: 4.8125rem;
+
+                // partner
+                .partner--logo {
+                    width: 73px;
+                    height: 73px;
+                    margin-right: 1.875rem;
+                }
+
+                .partner--title {
+                    @include font-setup($color-text-body-lg, $text-base, $bold, uppercase);
+                    line-height: normal;
+                }
+
+                // social
+                .content--social {
+                    margin-top: 2.9375rem;
+                    margin-bottom: 4.8125rem;
+
+                    @include laptop {
+                        margin-bottom: unset;
+                    }
+                }
+
+                .social--list {
+                    @include display-flex(center, "");
+                    gap: 3rem;
+                }
+            }
+
+            .content--sitemap {
+                flex: 1;
+                height: 100%;
+                margin-bottom: 4.8125rem;
+
+                @include laptop {
+                    margin-bottom: unset;
+                }
+
+                .sitemap--list-item {
+                    @include font-setup($color-text-body-lg, $text-base, $regular, uppercase);
+                    line-height: 2.5;
+                }
+
+                .contact--link-icon {
+                    @include font-setup($color-text-body-lg, $text-sm, $regular, none);
+                    line-height: 2.6;
+                }
+            }
+        }
+    }
+
+    .content--subscription {
+        width: 100%;
+        height: 100%;
+        display: block;
+        padding: 4.8125rem 4.16%;
+
+        background-color: $color-background-opacity;
+
+        @include laptop {
+            width: 35%;
+            padding: 0 4.16% 0 0;
+        }
+    }
+
+    &--container-copyright {
+        @include display-flex(center, space-between);
+        @include font-setup($color-text-body, $text-sm, $regular, none);
+        width: 100%;
+        height: 80px;
+        padding-inline: 4.16%;
+        background-color: $color-accent;
+    }
+}

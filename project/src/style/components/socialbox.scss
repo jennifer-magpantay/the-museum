@@ -18,12 +18,15 @@
 
         &-item {
             display: flex;
-            padding-top: 1.95rem;
-            padding-bottom: 1.95rem;
+            padding: 1.25rem; //19.5px;
+
+            &:hover {
+                background-color: $color-accent-dk;
+            }
 
             &.language {
-                padding-inline: 2.4rem;
-                border-right: 01px solid #c3051e;
+                padding-inline: 1.5rem; //24px
+                border-right: 01px solid $color-accent-dk; //16px
             }
 
             &.icon {
@@ -31,18 +34,14 @@
 
                 @include laptop-large {
                     display: block;
-                    padding-inline: 1.6rem;
+                    padding-inline: 01rem;
                 }
             }
 
             .list--link {
                 display: flex;
             }
-
-            &:hover {
-                background-color: #c3051e;
-            }
-
+            
             .language--select {
                 background-color: transparent;
                 border: none;

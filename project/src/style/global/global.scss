@@ -1,11 +1,11 @@
 @use "../helpers/variables" as *;
+@use "../helpers/mixins" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap");
 
 // Global tags
 html {
     font-family: "Work Sans", sans-serif;
-    font-size: 62.5%;
     overflow: auto;
     scroll-behavior: smooth;
     -moz-osx-font-smoothing: grayscale;
@@ -21,9 +21,13 @@ li {
 }
 
 // Global classes
+.container--row {
+    @include display-flex(center, flex-start);
+}
+
 .line-break::after {
-  content: "\a";
-  white-space: pre;
+    content: "\a";
+    white-space: pre;
 }
 
 .visually-hidden {
