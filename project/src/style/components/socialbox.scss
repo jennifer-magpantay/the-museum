@@ -3,11 +3,15 @@
 @use "../helpers/responsive" as *;
 
 .box--container {
-    @include font-setup($color-text-body-lg, $text-regular, $semibold, uppercase);
-    display: block;
-    margin-left: auto;
-    background-color: $color-accent;
-    color: $color-text-body-lg;
+    display: none;
+
+    @include large-mobile {
+        @include font-setup($color-text-body-lg, $text-regular, $semibold, uppercase);
+        display: block;
+        margin-left: auto;
+        background-color: $color-accent;
+        color: $color-text-body-lg;
+    }
 
     .box--list {
         @include display-flex(center, "");

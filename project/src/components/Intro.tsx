@@ -10,6 +10,14 @@ export const Intro = () => {
           alt="Old statue from The Museum in close"
         />
       </div>
+
+      <div className="intro--text">
+        <h1 className="intro--text-title"><span className="line-break">ARCHIVIO</span> STORICO</h1>
+        <h2 className="intro--text-subtitle">
+          Una raccolta di tutti i momenti più importanti nella storia del museo
+          e dei suoi curatori.
+        </h2>
+      </div>
     </div>
   );
 };
