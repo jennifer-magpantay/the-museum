@@ -1,3 +1,4 @@
+import { Exhibitions } from "../components/Exhibitions";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Intro } from "../components/Intro";
@@ -16,6 +17,7 @@ export const Home = () => {
       </Header>
       <Main>
         <Intro />
+        <Exhibitions />
       </Main>
       <Footer />
     </>

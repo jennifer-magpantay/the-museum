@@ -1,0 +1,92 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixins" as *;
+@use "../helpers/responsive" as *;
+
+.section {
+    padding-inline: 4.16%;
+
+    &--header {
+        width: 100%;
+        display: block;
+        margin: 7.5rem 0 5rem;
+
+        @include laptop {
+            @include display-flex(center, "");
+            gap: 01rem;
+        }
+
+        &-title {
+            @include font-setup($color-text-body, $text-4xlg, $medium, uppercase);
+            width: 30%;
+            letter-spacing: -2.5px;
+        }
+
+        &-filters {
+            @include display-flex(center, space-between);
+            width: 100%;
+            margin-top: 1rem;
+            gap: 2.5rem;
+
+            @include laptop {
+                width: 70%;
+                margin-top: unset;
+                gap: 10%;
+            }
+
+            .filter {
+                @include display-flex(center, "");
+                flex: 1;
+                gap: 01rem;
+
+                &--label {
+                    @include font-setup($color-text-body, $text-2xlg, $regular, uppercase);
+                }
+
+                &--select {
+                    width: 100%;
+                    flex: 1;
+                    padding: 0.5rem 0.25rem;
+                    background-color: transparent;
+                    border: none;
+                    border-bottom: 01px solid $opacity-black-20;
+
+                    appearance: none;
+                    padding-right: 1rem;
+                    background-image: url("../assets/caret-down-bold.svg");
+                    background-repeat: no-repeat;
+                    background-position: calc(100% - 3px) center;
+                    background-size: 1rem;
+
+                    &:focus {
+                        background-color: #ffffff;
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+
+    &--body {
+        width: 100%;
+        margin-bottom: 6.875rem;
+
+        @include tablet {
+            @include display-flex(center, "");
+            flex-wrap: wrap;
+            gap: 2.5rem;
+        }
+    }
+
+    .button--load {
+        @include font-setup($color-text-body, $text-lg, $semibold, uppercase);
+        display: block;
+        margin: 0 auto 9.375rem;
+        background-color: transparent;
+        border: none;
+        text-decoration: underline;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
