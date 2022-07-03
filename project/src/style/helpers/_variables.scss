@@ -1,7 +1,7 @@
 // Colors
 $color-accent: #d6001c;
 $color-accent-dk: #c3051e;
-$color-background-lg: #e5e5e5;
+$color-background-lg: #fcf9f1;
 $color-background-dk: #030909;
 $color-background-opacity: rgba(255, 255, 255, 0.1);
 $color-text-body: #000000;
@@ -28,5 +28,8 @@ $semibold: 600;
 $bold: 700;
 
 // Miscelaneous
+$opacity-black-20: rgba(0, 0, 0, 0.2);
 $opacity-lg-10: rgba(255, 255, 255, 0.1);
 $opacity-lg-50: rgba(255, 255, 255, 0.5);
+
+$overlay: rgba(0, 0, 0, 0.4);

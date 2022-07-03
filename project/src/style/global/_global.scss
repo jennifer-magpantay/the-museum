@@ -12,6 +12,10 @@ html {
     -webkit-font-smoothing: antialiased;
 }
 
+body {
+    background-color: $color-background-lg;
+}
+
 h1 {
     color: $color-accent;
 }
