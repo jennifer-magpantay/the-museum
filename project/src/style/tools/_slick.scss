@@ -1,0 +1,47 @@
+// @import "~slick-carousel/slick/slick.css"; //Does not work ?
+// @import "~slick-carousel/slick/slick-theme.css"; //Does not work ?
+
+.slick {
+    width: 100%;
+    margin-top: 5rem;
+
+    .slick-slide {
+        // defines the height of a single slide container
+        // width: 1160px; // does not work ?
+        height: 550px;
+
+        & > div {
+            height: 100%;
+            padding-inline: 1.5rem;
+        }
+    }
+
+    .slick-dots {
+        text-align: start;
+        margin-bottom: -2.625rem;
+
+        li button::before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .slick-active button::before {
+            border: 04px solid red;
+            border-radius: 50%;
+            color: #ffffff;
+        }
+    }
+
+    &--image {
+        width: 100%;
+        height: 100%;
+
+        &-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
