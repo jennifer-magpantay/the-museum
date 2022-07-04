@@ -1,0 +1,32 @@
+@mixin fade-animation($name) {
+    @keyframes #{$name} {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
+@mixin fade-out($name) {
+    @keyframes #{$name} {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+}
+
+@mixin translate-down($name) {
+    @keyframes #{$name} {
+        0% {
+            transform: translateY(0%);
+        }
+        100% {
+            transform: translateY(100%);
+        }
+    }
+}
