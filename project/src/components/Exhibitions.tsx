@@ -14,31 +14,64 @@ import { DataType } from "../data/data";
 // helpers
 import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 import { formatDate } from "../helpers/formatDate";
+import { api } from "../helpers/api";
+
+type ImagesType = {
+  src: string;
+};
 
 export const Exhibitions = () => {
   const [events, setEvents] = useState<DataType[]>([]);
   const [eventsPerPage, setEventsPerPage] = useState<DataType[]>([]);
-  const [nextEventsToSHow, setNextEventsToShow] = useState(4);
   const [isContentExpanded, setIsContentExpanded] = useState(false);
+  const [nextEventsToSHow, setNextEventsToShow] = useState(4);
+  const [images, setImages] = useState<ImagesType[]>([]);
 
   const numberOfEventsPerPage = 4;
 
-  const ref = useRef(null);
-
   useEffect(() => {
-    const list = data.map((item) => {
+    // set images list from API
+    async function setImagesList() {
+      // call API
+      const response = await api.get("/search?query=museum&per_page=20");
+      const imagesList = response.data.photos;
+      // save the src into a new list
+      const sourceList = imagesList.map((item: any) => {
+        const obj: ImagesType = {
+          src: item.src.medium,
+        };
+        return obj;
+      });
+      // set state
+      setImages(sourceList);
+    }
+    setImagesList();
+
+    //make a data copy with formated fields
+    const list = data.map((item, index) => {
       const newEventsList: DataType = {
         id: item.id,
         title: capitalizeFirstLetter(item.title),
         description: capitalizeFirstLetter(item.description),
-        image: item.image,
+        image: getImage(images, index, item.image),
         date: capitalizeFirstLetter(formatDate(item.date)),
       };
       return newEventsList;
     });
+    // set to the a new state
     setEvents(list);
+    // call function to render the firt group of images
     sliceEventsGroup(list, 0, numberOfEventsPerPage);
   }, []);
+
+  function getImage(data: ImagesType[], i: number, callback: string) {
+    const sourceList = data.map((item) => item.src);
+    const sourceIndex = sourceList[i];
+    if (sourceIndex === undefined) {
+      return callback;
+    }
+    return sourceIndex;
+  }
 
   function sliceEventsGroup(data: any, start: number, end: number) {
     let arrayForHoldingPosts: any = [];
@@ -105,14 +138,14 @@ export const Exhibitions = () => {
       </div>
       <div className="section--body">
         <Card
-          image="http://lorempixel.com/640/360"
+          image="https://images.unsplash.com/photo-1563292769-4e05b684851a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwxOXx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
           title="Gallery 1"
           date="Apr 17 - Nov 01, 2020"
           onClick={() => handleExpandContentOnClick()}
         ></Card>
 
         <Card
-          image="http://lorempixel.com/640/360"
+          image="https://images.unsplash.com/photo-1565060169194-19fabf63012c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwyMHx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
           title="Lorem, ipsum dolor."
           date="Apr 17 - Nov 01, 2020"
           onClick={() => handleExpandContentOnClick()}
@@ -120,7 +153,7 @@ export const Exhibitions = () => {
 
         <CardsList data={eventsPerPage} onClick={handleExpandContentOnClick} />
       </div>
-      
+
       {isContentExpanded && (
         <CollapseSection
           title="Gallery 1"
