@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import { Card } from "./Card";
-import { CollapseSection } from "./CollapseSection";
+import { Gallery } from "./Gallery";
 import { Slick } from "./Slick";
 
 // data
@@ -20,6 +20,14 @@ type ImagesType = {
   src: string;
 };
 
+/*
+  TODO:
+  - fix type error on image: string | Promise<any>
+  - refactor code: taking aside the logic, as much is possible
+  - refactor data list to add from-to dates
+  - build solution to format from-to dates and update states
+*/
+
 export const Exhibitions = () => {
   const [events, setEvents] = useState<DataType[]>([]);
   const [eventsPerPage, setEventsPerPage] = useState<DataType[]>([]);
@@ -28,6 +36,12 @@ export const Exhibitions = () => {
   const [images, setImages] = useState<ImagesType[]>([]);
 
   const numberOfEventsPerPage = 4;
+
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const groupRef = useRef<HTMLDivElement>(null);
+  const groupContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // set images list from API
@@ -64,11 +78,11 @@ export const Exhibitions = () => {
     sliceEventsGroup(list, 0, numberOfEventsPerPage);
   }, []);
 
-  function getImage(data: ImagesType[], i: number, callback: string) {
+  function getImage(data: ImagesType[], i: number, fallback: string) {
     const sourceList = data.map((item) => item.src);
     const sourceIndex = sourceList[i];
     if (sourceIndex === undefined) {
-      return callback;
+      return fallback;
     }
     return sourceIndex;
   }
@@ -80,8 +94,38 @@ export const Exhibitions = () => {
     setEventsPerPage(arrayForHoldingPosts);
   }
 
-  function handleExpandContentOnClick() {
-    setIsContentExpanded((prevState) => !isContentExpanded);
+  function handleGalleryContent() {
+    // change state
+    setIsContentExpanded(!isContentExpanded);
+    // isContentExpanded ? add class to run animation : reverse animation and remove class after event
+    // same logic for both gallery content and group content
+    if (!isContentExpanded) {
+      groupContentRef.current?.classList.add("move-down");
+      galleryRef.current?.classList.add("expand");
+      groupRef.current?.classList.add("group-expand");
+    } else {
+      groupContentRef.current?.classList.remove("move-down");
+      groupContentRef.current?.classList.add("move-up");
+      removeClassAfterAnimation(groupContentRef, "move-up");
+
+      galleryRef.current?.classList.remove("expand");
+      galleryRef.current?.classList.add("close");
+      removeClassAfterAnimation(galleryRef, "close");
+
+      groupRef.current?.classList.remove("group-expand");
+      groupRef.current?.classList.add("group-close");
+      removeClassAfterAnimation(groupRef, "group-close");
+    }
+  }
+
+  function removeClassAfterAnimation(reference: any, classname: string) {
+    reference.current?.addEventListener(
+      "animationend",
+      () => {
+        reference.current?.classList.remove(classname);
+      },
+      { once: true }
+    );
   }
 
   function handleLoadMore() {
@@ -89,8 +133,20 @@ export const Exhibitions = () => {
     setNextEventsToShow(nextEventsToSHow + numberOfEventsPerPage);
   }
 
+  function getNextElement(data: any, index: number) {
+    // get the nex element based on the current index
+    const nextIndex = index + 1;
+    const nextElement = data[nextIndex];
+    // then create an array to save the element
+    let arr: any = [];
+    arr.push(nextElement);
+    // return the array to be mapped
+    return arr;
+  }
+
   return (
     <section className="section">
+      {/* Header and Filters */}
       <div className="section--header">
         <h3 className="section--header-title">Title</h3>
         {/* filters */}
@@ -136,40 +192,105 @@ export const Exhibitions = () => {
           </div>
         </div>
       </div>
+
       <div className="section--body">
-        <Card
-          image="https://images.unsplash.com/photo-1563292769-4e05b684851a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwxOXx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
-          title="Gallery 1"
-          date="Apr 17 - Nov 01, 2020"
-          onClick={() => handleExpandContentOnClick()}
-        ></Card>
+        {/* render content */}
+        <div className="group" ref={groupRef}>
+          {/* fix the collapsible content on top */}
+          <Gallery
+            id="123"
+            title="Gallery 1"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit etiam id blandit elementum lectus mauris ut cursus adipiscing. Egestas nam mattis adipiscing velit fermentum et."
+            onClick={handleGalleryContent}
+            isContentExpanded={isContentExpanded}
+            ref={galleryRef}
+          >
+            <Slick />
+          </Gallery>
 
-        <Card
-          image="https://images.unsplash.com/photo-1565060169194-19fabf63012c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwyMHx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
-          title="Lorem, ipsum dolor."
-          date="Apr 17 - Nov 01, 2020"
-          onClick={() => handleExpandContentOnClick()}
-        ></Card>
+          <div className="group--content" ref={groupContentRef}>
+            <Card
+              id="123"
+              image="https://images.unsplash.com/photo-1563292769-4e05b684851a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwxOXx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
+              title="Gallery 1"
+              date="Apr 17 - Nov 01, 2020"
+              onClick={handleGalleryContent}
+              ref={cardRef}
+            />
 
-        <CardsList data={eventsPerPage} onClick={handleExpandContentOnClick} />
+            <Card
+              id="345"
+              image="https://images.unsplash.com/photo-1565060169194-19fabf63012c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwyMHx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
+              title="Lorem, ipsum dolor."
+              date="Apr 17 - Nov 01, 2020"
+              onClick={handleGalleryContent}
+              ref={cardRef}
+            />
+          </div>
+        </div>
+
+        {/* Render list */}
+        {eventsPerPage.map((item: DataType, index: number) => {
+          if (index % 2 === 0) {
+            const nextElement = getNextElement(events, index);
+            return (
+              <div
+                className="group"
+                key={item.id}
+                id={String(item.id)}
+                ref={groupRef}
+              >
+                <Gallery
+                  id={String(index)}
+                  title="Gallery 1"
+                  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit etiam id blandit elementum lectus mauris ut cursus adipiscing. Egestas nam mattis adipiscing velit fermentum et."
+                  onClick={handleGalleryContent}
+                  isContentExpanded={isContentExpanded}
+                  ref={galleryRef}
+                >
+                  <Slick />
+                </Gallery>
+
+                <div className="group--content" ref={groupContentRef}>
+                  <>
+                    <Card
+                      key={item.id}
+                      id={String(item.id)}
+                      image={item.image}
+                      title={item.title}
+                      date={item.date}
+                      onClick={handleGalleryContent}
+                      ref={cardRef}
+                    />
+
+                    {nextElement.map((item: any) => (
+                      <Card
+                        key={item.id}
+                        id={String(item.id)}
+                        image={item.image}
+                        title={item.title}
+                        date={item.date}
+                        onClick={handleGalleryContent}
+                        ref={cardRef}
+                      />
+                    ))}
+                  </>
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
 
-      {isContentExpanded && (
-        <CollapseSection
-          title="Gallery 1"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit etiam id blandit elementum lectus mauris ut cursus adipiscing. Egestas nam mattis adipiscing velit fermentum et."
-          onClick={handleExpandContentOnClick}
-        >
-          <Slick />
-        </CollapseSection>
-      )}
-
+      {/* Load more button */}
       <button
         className="button--load"
         onClick={handleLoadMore}
         disabled={eventsPerPage.length === events.length ? true : false}
       >
-        Load More
+        {eventsPerPage.length === events.length
+          ? "No more content to show"
+          : "Load More"}
       </button>
     </section>
   );
