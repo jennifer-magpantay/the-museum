@@ -3,14 +3,37 @@
 @use "../helpers/responsive" as *;
 @use "../helpers/animations" as *;
 
-.content {
-    @include fade-animation(fading);
+.gallery {
     width: 100%;
-    // height: 70vh;
-    padding: 7.25rem 4.16%;
+    height: 0;
+    padding-inline: 4.16%;
     background-color: #232323;
-    animation: fading 1s linear;
-   
+    pointer-events: none;
+    opacity: 0;
+    transition: all 02s linear;
+
+    &.expand {
+        @include fade-in(fading-in);
+        @include scale-up(expand);
+        height: 1280px;
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+        pointer-events: unset;
+        transform: translateZ(0);
+        animation: fading-in 2s linear forwards;
+    }
+
+    &.close {
+        @include fade-out(fading-out);
+        // @include scale-down(close);
+        height: 0px;
+        padding-top: 0;
+        padding-bottom: 0;
+        pointer-events: none;
+        transform: translateZ(0);
+        animation: fading-out 2s linear forwards;
+    }
+
     &--header {
         @include display-flex(center, space-between);
         width: 100%;

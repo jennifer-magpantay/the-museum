@@ -5,7 +5,7 @@
 .card {
     width: 100%;
     // height: 560px;
-    margin-bottom: 7.625rem;
+    // margin-bottom: 7.625rem;
 
     &:hover {
         cursor: pointer;
@@ -18,7 +18,7 @@
     &--image {
         width: 100%;
         height: 25vh;
-        border: 01px solid red;
+        background-color: $opacity-black-20;
 
         @include laptop {
             height: 45vh;
@@ -28,11 +28,17 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+
+            &:hover {
+                transform: rotate(5deg);
+            }
         }
     }
 
     &--body {
         display: block;
+        height: 120px; // keeps the height consistency in cards
         padding-top: 0.5rem;
 
         @include laptop-large {
@@ -44,7 +50,6 @@
         &-title {
             @include font-setup($color-text-body, $text-2xlg, $medium, none);
             width: 100%;
-            height: 100px; // keeps the height consistency in cards
             line-height: normal;
             letter-spacing: -1.5px;
 

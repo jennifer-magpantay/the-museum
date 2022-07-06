@@ -1,14 +1,16 @@
 @use "../helpers/variables" as *;
 @use "../helpers/mixins" as *;
 @use "../helpers/responsive" as *;
+@use "../helpers/animations" as *;
 
 .section {
-    padding-inline: 4.16%;
+    // padding-inline: 4.16%;
 
     &--header {
         width: 100%;
         display: block;
         margin: 7.5rem 0 5rem;
+        padding-inline: 4.16%;
 
         @include laptop {
             @include display-flex(center, "");
@@ -68,15 +70,46 @@
 
     &--body {
         width: 100%;
-        // margin-bottom: 6.875rem;
-        // columns: 1;
 
-        @include tablet {
-            // columns: 2;
-            // column-gap: 2.5rem;
-            @include display-flex(center, "");
-            flex-wrap: wrap;
-            gap: 2.5rem;
+        .group {
+            width: 100%;
+            height: auto;
+            margin-bottom: 7.625rem;
+            position: relative;
+
+            &.group-expand {
+                @include expand-group(expanding);
+                animation: expanding 2s linear forwards;
+                overflow: hidden;
+            }
+
+            &.group-close {
+                @include close-group(closing);
+                animation: closing 2s linear forwards;
+            }
+
+            &--content {
+                padding-inline: 4.16%;
+
+                &.move-down {
+                    @include translate-down(moving-down);
+                    @include fade-out(fading-out);
+                    pointer-events: none;
+                    animation: moving-down 2s linear forwards, fading-out 2s linear forwards;
+                }
+
+                &.move-up {
+                    @include translate-up(moving-up);
+                    @include fade-in(fading-in);
+                    animation: moving-up 2s linear forwards, fading-in 2s linear forwards;
+                }
+
+                @include tablet {
+                    @include display-flex(center, "");
+                    flex-wrap: wrap;
+                    gap: 2.5rem;
+                }
+            }
         }
     }
 
