@@ -63,6 +63,6 @@
     .newsletter--link {
         @include font-setup($color-text-body-lg, $text-base, $semibold, uppercase);
         padding-right: 1rem;
-        letter-spacing: -1px;
+        // letter-spacing: -1px;
     }
 }

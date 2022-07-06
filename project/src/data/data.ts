@@ -9,7 +9,7 @@ export type DataType = {
 export const data = [
   {
     id: 1,
-    title: "nisl nunc nisl duis bibendum",
+    title: "Gallery 1",
     description:
       "Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
     image:

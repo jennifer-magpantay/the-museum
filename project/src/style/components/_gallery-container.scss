@@ -1,0 +1,49 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixins" as *;
+@use "../helpers/responsive" as *;
+@use "../helpers/animations" as *;
+
+.gallery {
+    width: 100%;
+    height: 0;
+    padding-inline: 4.16%;
+    background-color: #232323;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 02s linear;
+
+    &.expand {
+        @include fade-in(fading-in);
+        @include scale-up(expand);
+        height: 1280px;
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+        pointer-events: unset;
+        transform: translateZ(0);
+        animation: fading-in 2s linear forwards;
+    }
+
+    &.close {
+        @include fade-out(fading-out);
+        // @include scale-down(close);
+        height: 0px;
+        padding-top: 0;
+        padding-bottom: 0;
+        pointer-events: none;
+        transform: translateZ(0);
+        animation: fading-out 2s linear forwards;
+    }
+
+    &--button-close {
+        position: absolute;
+        top: 9.375rem;
+        right: 4.16%;
+        background-color: transparent;
+        border: none;
+        z-index: 1;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

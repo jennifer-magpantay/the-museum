@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
 import { Card } from "./Card";
-import { Gallery } from "./Gallery";
-import { Slick } from "./Slick";
 
 // data
 import { data } from "../data/data";
@@ -15,6 +13,8 @@ import { DataType } from "../data/data";
 import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 import { formatDate } from "../helpers/formatDate";
 import { api } from "../helpers/api";
+import { GalleryContainer } from "./GalleryContainer";
+import { Carousel } from "./Carousel";
 
 type ImagesType = {
   src: string;
@@ -95,6 +95,7 @@ export const Exhibitions = () => {
   }
 
   function handleGalleryContent() {
+    console.log("clicking");
     // change state
     setIsContentExpanded(!isContentExpanded);
     // isContentExpanded ? add class to run animation : reverse animation and remove class after event
@@ -195,40 +196,6 @@ export const Exhibitions = () => {
 
       <div className="section--body">
         {/* render content */}
-        <div className="group" ref={groupRef}>
-          {/* fix the collapsible content on top */}
-          <Gallery
-            id="123"
-            title="Gallery 1"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit etiam id blandit elementum lectus mauris ut cursus adipiscing. Egestas nam mattis adipiscing velit fermentum et."
-            onClick={handleGalleryContent}
-            isContentExpanded={isContentExpanded}
-            ref={galleryRef}
-          >
-            <Slick />
-          </Gallery>
-
-          <div className="group--content" ref={groupContentRef}>
-            <Card
-              id="123"
-              image="https://images.unsplash.com/photo-1563292769-4e05b684851a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwxOXx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
-              title="Gallery 1"
-              date="Apr 17 - Nov 01, 2020"
-              onClick={handleGalleryContent}
-              ref={cardRef}
-            />
-
-            <Card
-              id="345"
-              image="https://images.unsplash.com/photo-1565060169194-19fabf63012c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNDMzNzB8MHwxfHNlYXJjaHwyMHx8bXVzZXVtfGVufDB8MHx8fDE2NTY5MzI0Mjk&ixlib=rb-1.2.1&q=80&w=1080"
-              title="Lorem, ipsum dolor."
-              date="Apr 17 - Nov 01, 2020"
-              onClick={handleGalleryContent}
-              ref={cardRef}
-            />
-          </div>
-        </div>
-
         {/* Render list */}
         {eventsPerPage.map((item: DataType, index: number) => {
           if (index % 2 === 0) {
@@ -240,16 +207,12 @@ export const Exhibitions = () => {
                 id={String(item.id)}
                 ref={groupRef}
               >
-                <Gallery
-                  id={String(index)}
-                  title="Gallery 1"
-                  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit etiam id blandit elementum lectus mauris ut cursus adipiscing. Egestas nam mattis adipiscing velit fermentum et."
+                <GalleryContainer
                   onClick={handleGalleryContent}
-                  isContentExpanded={isContentExpanded}
                   ref={galleryRef}
                 >
-                  <Slick />
-                </Gallery>
+                  <Carousel />
+                </GalleryContainer>
 
                 <div className="group--content" ref={groupContentRef}>
                   <>
