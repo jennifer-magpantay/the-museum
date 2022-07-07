@@ -19,12 +19,6 @@ type ImagesType = {
   src: string;
 };
 
-/*
-  TODO:
-  - fix type error on image: string | Promise<any>
-  - refactor code: taking aside the logic, as much is possible
- */
-
 export const Exhibitions = () => {
   const [events, setEvents] = useState<DataType[]>([]);
   const [eventsPerPage, setEventsPerPage] = useState<DataType[]>([]);

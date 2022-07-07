@@ -2,7 +2,7 @@ export type DataType = {
   id: number;
   title: string;
   description: string;
-  image: string | Promise<any>;
+  image: string;
   date: string;
 };
 
