@@ -23,6 +23,7 @@ Download or clone the project
 After downloading or cloning the file, open it and go to the project's folder
 
 ```bash
+  cd the-museum
   cd project
 ```
 
