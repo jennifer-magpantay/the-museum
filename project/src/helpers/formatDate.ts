@@ -1,15 +1,28 @@
+import { capitalizeFirstLetter } from "./capitalizeFirstLetter";
+
 export const formatDate = (date: string) => {
-  const dt = new Date(date);
-  
-  const month = dt.toLocaleDateString("it-IT", {
+  const ThirtyDaysInMs = 1000 * 60 * 60 * 24 * 30;
+  const dateTo = new Date(date);
+  const dateFrom = new Date(Number(dateTo) - ThirtyDaysInMs);
+
+  const monthTo = dateTo.toLocaleDateString("it-IT", {
     month: "short",
   });
-  const day = dt.toLocaleDateString("it-IT", {
+  const dayTo = dateTo.toLocaleDateString("it-IT", {
+    day: "2-digit",
+  });
+  const year = dateTo.toLocaleDateString("it-IT", {
+    year: "2-digit",
+  });
+
+  const monthFrom = dateFrom.toLocaleDateString("it-IT", {
+    month: "short",
+  });
+  const dayFrom = dateFrom.toLocaleDateString("it-IT", {
     day: "2-digit",
   });
 
-  const year = dt.toLocaleDateString("it-IT", {
-    year: "2-digit",
-  });
-  return `${month} ${day}, ${year}`;
+  return `${capitalizeFirstLetter(
+    monthFrom
+  )} ${dayFrom} - ${capitalizeFirstLetter(monthTo)} ${dayTo}, ${year}`;
 };
