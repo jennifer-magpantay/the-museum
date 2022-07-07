@@ -2,7 +2,7 @@
 
 ## Technologies
 
-- Vite, React, Sass, Phosphor Icons.
+- Vite, React, Typescript, Sass, Phosphor Icons.
 
 ## Goals
 
