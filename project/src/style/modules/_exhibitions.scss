@@ -9,11 +9,12 @@
     &--header {
         width: 100%;
         display: block;
-        margin: 7.5rem 0 5rem;
+        margin: 5rem 0 5rem;
         padding-inline: 4.16%;
 
         @include laptop {
             @include display-flex(center, "");
+            margin: 7.5rem 0 5rem;
             gap: 01rem;
         }
 
@@ -74,21 +75,17 @@
         .group {
             width: 100%;
             height: auto;
-            margin-bottom: 7.625rem;
+            margin-bottom: 01rem;
             position: relative;
 
-            &--gallery {
-                display: none;
+            @include tablet {
+                margin-bottom: 7.625rem;
             }
 
             &.group-expand {
                 @include expand-group(expanding);
                 animation: expanding 2s linear forwards;
                 overflow: hidden;
-
-                &--gallery {
-                    display: block;
-                }
             }
 
             &.group-close {
@@ -124,10 +121,14 @@
     .button--load {
         @include font-setup($color-text-body, $text-lg, $semibold, uppercase);
         display: block;
-        margin: 09.375rem auto;
+        margin: 5.25rem auto;
         background-color: transparent;
         border: none;
         text-decoration: underline;
+
+        @include laptop {
+            margin: 5.25rem auto 09.375rem;
+        }
 
         &:disabled {
             opacity: 0.3;

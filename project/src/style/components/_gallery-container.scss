@@ -14,8 +14,7 @@
 
     &.expand {
         @include fade-in(fading-in);
-        @include scale-up(expand);
-        height: 1280px;
+        height: 1000px; //1280px
         padding-top: 7rem;
         padding-bottom: 7rem;
         pointer-events: unset;
@@ -25,10 +24,7 @@
 
     &.close {
         @include fade-out(fading-out);
-        // @include scale-down(close);
         height: 0px;
-        padding-top: 0;
-        padding-bottom: 0;
         pointer-events: none;
         transform: translateZ(0);
         animation: fading-out 2s linear forwards;

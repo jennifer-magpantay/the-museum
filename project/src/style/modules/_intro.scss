@@ -6,7 +6,7 @@
     height: 720px;
     position: relative;
 
-    &--overlay {
+        &--overlay {
         position: absolute;
         inset: 0;
         background-color: $overlay;

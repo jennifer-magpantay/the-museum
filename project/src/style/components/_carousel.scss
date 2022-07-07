@@ -54,9 +54,13 @@
     }
 
     &--content-image {
-        width: 60%;
+        width: 100%;
         height: 500px;
         aspect-ratio: 2/1;
+
+        @include laptop {
+            width: 60%;
+        }
 
         .carousel--image {
             width: 100%;
