@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
 
 import { Card } from "./Card";
+import { Carousel } from "./Carousel";
+import { GalleryContainer } from "./GalleryContainer";
 
 // data
 import { data } from "../data/data";
-import { CardsList } from "./CardsList";
 
 // types
 import { DataType } from "../data/data";
 
 // helpers
+import { api } from "../helpers/api";
 import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 import { formatDate } from "../helpers/formatDate";
-import { api } from "../helpers/api";
-import { GalleryContainer } from "./GalleryContainer";
-import { Carousel } from "./Carousel";
 
 type ImagesType = {
   src: string;
@@ -24,9 +23,7 @@ type ImagesType = {
   TODO:
   - fix type error on image: string | Promise<any>
   - refactor code: taking aside the logic, as much is possible
-  - refactor data list to add from-to dates
-  - build solution to format from-to dates and update states
-*/
+ */
 
 export const Exhibitions = () => {
   const [events, setEvents] = useState<DataType[]>([]);
@@ -62,7 +59,7 @@ export const Exhibitions = () => {
         title: capitalizeFirstLetter(item.title),
         description: capitalizeFirstLetter(item.description),
         image: getImage(images, index, item.image),
-        date: capitalizeFirstLetter(formatDate(item.date)),
+        date: formatDate(item.date),
       };
       return newEventsList;
     });
@@ -108,10 +105,13 @@ export const Exhibitions = () => {
     gallery: HTMLElement | null,
     groupContent: HTMLElement | null
   ) {
+    const button = document.getElementById("gallery-button-close-js");
     if (!isContentExpanded) {
-      // add the classes that will make the animations
+      // add the classes that will make the animations and change aria
       group?.classList.add("group-expand");
       gallery?.classList.add("expand");
+      gallery?.setAttribute("aria-hidden", "false");
+      button?.setAttribute("aria-expanded", "true");
       groupContent?.classList.add("move-down");
     } else {
       // remove and reset the component's classes
@@ -121,6 +121,8 @@ export const Exhibitions = () => {
 
       gallery?.classList.remove("expand");
       gallery?.classList.add("close");
+      gallery?.setAttribute("aria-hidden", "true");
+      button?.setAttribute("aria-expanded", "true");
       removeClassAfterAnimation(gallery, "close");
 
       groupContent?.classList.remove("move-down");

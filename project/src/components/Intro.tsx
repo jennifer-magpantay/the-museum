@@ -2,7 +2,7 @@ import IntroImage from "../assets/intro.png";
 
 export const Intro = () => {
   return (
-    <div className="intro">
+    <div className="intro">     
       <div className="intro--overlay"></div>
       <div className="intro--image">
         <img
@@ -12,7 +12,7 @@ export const Intro = () => {
         />
       </div>
 
-      <div className="intro--text">
+      <div className="intro--text" id="main">
         <h1 className="intro--text-title">
           <span className="line-break">ARCHIVIO</span> STORICO
         </h1>
