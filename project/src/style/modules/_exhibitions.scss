@@ -77,10 +77,18 @@
             margin-bottom: 7.625rem;
             position: relative;
 
+            &--gallery {
+                display: none;
+            }
+
             &.group-expand {
                 @include expand-group(expanding);
                 animation: expanding 2s linear forwards;
                 overflow: hidden;
+
+                &--gallery {
+                    display: block;
+                }
             }
 
             &.group-close {

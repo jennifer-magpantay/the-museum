@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import { Card } from "./Card";
 
@@ -37,12 +37,6 @@ export const Exhibitions = () => {
 
   const numberOfEventsPerPage = 4;
 
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const groupRef = useRef<HTMLDivElement>(null);
-  const groupContentRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // set images list from API
     async function setImagesList() {
@@ -78,6 +72,63 @@ export const Exhibitions = () => {
     sliceEventsGroup(list, 0, numberOfEventsPerPage);
   }, []);
 
+  // handle functions
+  function handleGalleryContent(id: string) {
+    // change state
+    setIsContentExpanded(!isContentExpanded);
+    getElementID(id);
+  }
+
+  function handleLoadMore() {
+    sliceEventsGroup(events, 0, nextEventsToSHow + numberOfEventsPerPage);
+    setNextEventsToShow(nextEventsToSHow + numberOfEventsPerPage);
+  }
+
+  // helpers functions
+  function getElementID(id: string) {
+    // check if ID is an even or odd number
+    if (Number(id) % 2 === 0) {
+      // if is an odd number, recalculate it to the previous number id
+      const prevId = Number(id) - 1;
+      // with the prevous ID, get the elements
+      return getElements(String(prevId));
+    }
+    return getElements(id);
+  }
+
+  function getElements(id: string) {
+    const group = document.getElementById(`group-${id}`);
+    const gallery = document.getElementById(`gallery-${id}`);
+    const groupContent = document.getElementById(`group-content-${id}`);
+    setElementsClasses(group, gallery, groupContent);
+  }
+
+  function setElementsClasses(
+    group: HTMLElement | null,
+    gallery: HTMLElement | null,
+    groupContent: HTMLElement | null
+  ) {
+    if (!isContentExpanded) {
+      // add the classes that will make the animations
+      group?.classList.add("group-expand");
+      gallery?.classList.add("expand");
+      groupContent?.classList.add("move-down");
+    } else {
+      // remove and reset the component's classes
+      group?.classList.remove("group-expand");
+      group?.classList.add("group-close");
+      removeClassAfterAnimation(group, "group-close");
+
+      gallery?.classList.remove("expand");
+      gallery?.classList.add("close");
+      removeClassAfterAnimation(gallery, "close");
+
+      groupContent?.classList.remove("move-down");
+      groupContent?.classList.add("move-up");
+      removeClassAfterAnimation(groupContent, "move-up");
+    }
+  }
+
   function getImage(data: ImagesType[], i: number, fallback: string) {
     const sourceList = data.map((item) => item.src);
     const sourceIndex = sourceList[i];
@@ -94,44 +145,14 @@ export const Exhibitions = () => {
     setEventsPerPage(arrayForHoldingPosts);
   }
 
-  function handleGalleryContent() {
-    console.log("clicking");
-    // change state
-    setIsContentExpanded(!isContentExpanded);
-    // isContentExpanded ? add class to run animation : reverse animation and remove class after event
-    // same logic for both gallery content and group content
-    if (!isContentExpanded) {
-      groupContentRef.current?.classList.add("move-down");
-      galleryRef.current?.classList.add("expand");
-      groupRef.current?.classList.add("group-expand");
-    } else {
-      groupContentRef.current?.classList.remove("move-down");
-      groupContentRef.current?.classList.add("move-up");
-      removeClassAfterAnimation(groupContentRef, "move-up");
-
-      galleryRef.current?.classList.remove("expand");
-      galleryRef.current?.classList.add("close");
-      removeClassAfterAnimation(galleryRef, "close");
-
-      groupRef.current?.classList.remove("group-expand");
-      groupRef.current?.classList.add("group-close");
-      removeClassAfterAnimation(groupRef, "group-close");
-    }
-  }
-
   function removeClassAfterAnimation(reference: any, classname: string) {
-    reference.current?.addEventListener(
+    reference?.addEventListener(
       "animationend",
       () => {
-        reference.current?.classList.remove(classname);
+        reference?.classList.remove(classname);
       },
       { once: true }
     );
-  }
-
-  function handleLoadMore() {
-    sliceEventsGroup(events, 0, nextEventsToSHow + numberOfEventsPerPage);
-    setNextEventsToShow(nextEventsToSHow + numberOfEventsPerPage);
   }
 
   function getNextElement(data: any, index: number) {
@@ -195,26 +216,20 @@ export const Exhibitions = () => {
       </div>
 
       <div className="section--body">
-        {/* render content */}
         {/* Render list */}
         {eventsPerPage.map((item: DataType, index: number) => {
           if (index % 2 === 0) {
             const nextElement = getNextElement(events, index);
             return (
-              <div
-                className="group"
-                key={item.id}
-                id={String(item.id)}
-                ref={groupRef}
-              >
+              <div className="group" key={item.id} id={`group-${item.id}`}>
                 <GalleryContainer
-                  onClick={handleGalleryContent}
-                  ref={galleryRef}
+                  id={`gallery-${item.id}`}
+                  onClick={() => handleGalleryContent(String(item.id))}
                 >
                   <Carousel />
                 </GalleryContainer>
 
-                <div className="group--content" ref={groupContentRef}>
+                <div className="group--content" id={`group-content-${item.id}`}>
                   <>
                     <Card
                       key={item.id}
@@ -222,8 +237,7 @@ export const Exhibitions = () => {
                       image={item.image}
                       title={item.title}
                       date={item.date}
-                      onClick={handleGalleryContent}
-                      ref={cardRef}
+                      onClick={() => handleGalleryContent(String(item.id))}
                     />
 
                     {nextElement.map((item: any) => (
@@ -233,8 +247,7 @@ export const Exhibitions = () => {
                         image={item.image}
                         title={item.title}
                         date={item.date}
-                        onClick={handleGalleryContent}
-                        ref={cardRef}
+                        onClick={() => handleGalleryContent(String(item.id))}
                       />
                     ))}
                   </>
