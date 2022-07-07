@@ -14,13 +14,13 @@ Finished.
 
 ## Run locally
 
-[Download](https://github.com/jennifer-magpantay/the-museum) or clone the project
+Download or clone the project
 
 ```bash
   git clone https://github.com/jennifer-magpantay/the-museum.git
 ```
 
-Go to the project directory
+After downloading or cloning the file, open it and go to the project's folder
 
 ```bash
   cd project
@@ -37,6 +37,8 @@ Start the server
 ```bash
   npm run dev
 ```
+
+Enjoy it!
 
 ## Author
 
